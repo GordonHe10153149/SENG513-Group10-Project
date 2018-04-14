@@ -20,6 +20,9 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 
+app.get('/rooms.json', function(req, res){
+    res.sendfile('public/rooms/rooms.json');
+});
 
 // connect to database with mongoose
 mongoose.connect('mongodb://localhost/seng513db');
