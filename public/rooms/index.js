@@ -2,15 +2,26 @@
 
 let debug = false;
 var socket = io();
-
+var room;
+var rooms;
 function setIntent(roomName) {
     io.intent = roomName;
     console.log('intent set: ' + io.intent);
+	room = roomName;
 }
 
 function joinRoom(roomName) {
     socket.emit('subscribe', roomName);
 }
+/*
+socket.on('updatedListOfRooms',function(data){
+	
+	rooms = data;
+	updateList();
+	console.log(rooms);
+});*/
+
+
     // // var socket = io();
     // var canvas = document.getElementsByClassName('whiteboard')[0];
     // var colors = document.getElementsByClassName('color');

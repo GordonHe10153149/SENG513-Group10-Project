@@ -111,7 +111,7 @@ const fs = require('fs');
 const Canvas = require('canvas-prebuilt');
 const Image = Canvas.Image;
 
-let rooms;
+let rooms = [];
 let whiteboards = [];
 
 //loads existing rooms from rooms.json
@@ -145,6 +145,20 @@ function encodingFromFile(filePath, callback) {
     });
 }
 
+function UpdateListOfRooms(){
+	let namesOfRooms = getListOfRoomNames();
+	io.emit('updatedListOfRooms',namesOfRooms);
+}
+
+
+function getListOfRoomNames(){
+	let namesOfRooms = [];
+	rooms.forEach(function(room){
+		namesOfRooms.push(room.id);
+	});
+	return namesOfRooms;
+}
+
 // Loads pre-existing rooms from file into the local rooms variable
 function initializeRooms(filePath) {
     fs.readFile(filePath, function (err, data) {
@@ -169,7 +183,9 @@ function initializeRooms(filePath) {
 }
 
 function onConnection(socket) {
+	
     socket.on('makeRoom', function (data) {
+		console.log(rooms.findIndex(room => room.id === data.name));
         if (rooms.findIndex(room => room.id === data.name) === -1) {
             encodingFromFile(data.path, function (encoding) {
                 var newRoom = {
@@ -177,7 +193,6 @@ function onConnection(socket) {
                     "encoding": encoding
                 }
                 rooms.push(newRoom);
-                console.log('rooms: ' + rooms.length);
                 //create a new virtual canvas for the new room
                 whiteboards.push(new Canvas(720, 480));
                 let ctx = whiteboards[whiteboards.length - 1].getContext('2d');
@@ -185,13 +200,20 @@ function onConnection(socket) {
                 img.src = rooms[whiteboards.length - 1].encoding;
                 ctx.drawImage(img, 0, 0);
                 saveToFile('public/rooms/rooms.json', false);
+				console.log('updateRooms')
+				UpdateListOfRooms();
             });
         }
     });
+	
+	socket.on('getUpdatedList',function(data){
+		UpdateListOfRooms();
+	});
 
     socket.on('subscribe', function (data) {
         var roomName = data;
         var index = rooms.findIndex(room => room.id === roomName);
+		console.log(index + ", " + roomName);
         socket.join(roomName);
         console.log(socket.id + ' joined room: ' + data);
         //chatSubscribe(roomName, socket);
@@ -223,7 +245,6 @@ function onConnection(socket) {
         });
 
 
-
         sendStatus = function (s) {
             socket.emit('status', s);
         }
@@ -233,8 +254,9 @@ function onConnection(socket) {
         //     if (err) {
         //         throw err;
         //     }
-
-        chat.find({}).toArray(function (err, res) {
+		console.log(chat + ", " + chat.find({}));
+        chat.find({},function (err,res){
+			//result.toArray(function (err, res) {
             if (err) {
                 throw err;
             }

@@ -82,8 +82,9 @@ debug = false;
 		context.globalCompositeOperation = "destination-over";
 		context.fillStyle = "white";
 		context.fillRect(0,0,canvas.width,canvas.height);
+		
 		$('#dlBtn').attr("href",canvas.toDataURL('image/png'));
-		$('#dlBtn').attr("download",roomName + ".png");
+		$('#dlBtn').attr("download",room + ".png");
 
 		//clear the canvas
 		context.clearRect (0,0,canvas.width,canvas.height);
@@ -95,7 +96,6 @@ debug = false;
 		context.globalCompositeOperation = compositeOperation;
 
 
-		console.log('hi');
 
 	});
 
