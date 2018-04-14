@@ -55,8 +55,12 @@ socket.on('roomData', function(data) {
 	}
 });
 
+
 $('#btn-add').on('click', function(){
     let room_name = prompt("Please enter name of canvas room", "ex. The Matrix");
+
+    // let imageLoader = document.createElement('input');
+    // imageLoader = " <input type=\"file\" name=\"pic\" accept=\"image/*\">";
 
 	rooms_count++;//increment rooms count
 	console.log(canvas_room_str + rooms_count);
