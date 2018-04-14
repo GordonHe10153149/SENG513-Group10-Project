@@ -54,15 +54,10 @@ socket.on('roomData', function(data) {
         });
 	}
 });
-//not used?
-function gotoroom(room){
-	let room_str = room;
-	$('#btn4').on('click', function(){
-		$("#includedContent").load("/rooms/canvases/canvas.html");
-		setIntent($('#btn4').text());
-	})
-}
+
 $('#btn-add').on('click', function(){
+    let room_name = prompt("Please enter name of canvas room", "ex. The Matrix");
+
 	rooms_count++;//increment rooms count
 	console.log(canvas_room_str + rooms_count);
 	let element = $('<li>');
@@ -91,7 +86,7 @@ $('#btn-add').on('click', function(){
 	}
 
     checkbox = "<input type=\"checkbox\" id=" + checkbox_id +  ">";
-	myButton = "<button id =" + button_id + " type=\"button\" class="+ button_class +">" + button_txt + "</button>";
+	myButton = "<button id =" + button_id + " type=\"button\" class="+ button_class +">" + room_name + "</button>";
     element.append(checkbox);
 	element.append(myButton);
 	element.insertBefore(element_add);
