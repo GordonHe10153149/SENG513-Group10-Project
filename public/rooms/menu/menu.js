@@ -34,7 +34,6 @@ socket.on('roomData', function(data) {
 		let myButton = document.createElement('button');
 		rooms_count = i + 1;
 		let button_id = canvas_room_str + rooms_count;
-		let button_txt = canvas_room_str + rooms_count;
 		let button_class = '';
 		if(rooms_count%5===0){
 			button_class = "\"btn btn-secondary\"";
@@ -52,12 +51,15 @@ socket.on('roomData', function(data) {
 			button_class = "\"btn btn-danger\"";
 		}
 		//console.log(button_class);
-		myButton = "<input id=\"chk" + button_id+ "\" type=\"checkBox\"><button id =\"" + button_id + "\" type=\"button\" class="+ button_class +">" + button_id + "</button>";
+		myButton = "<input id=\"chk" + button_id+ "\" type=\"checkBox\"><button id =\"join" + button_id + "\" type=\"button\" class="+ button_class +">" + button_id + "</button>";
 		element.append(myButton);
 		element.insertBefore(element_add);
-		document.getElementById(button_id).addEventListener('click', function(){
+		document.getElementById('join'+button_id).addEventListener('click', function(){
 			$("#includedContent").load("/rooms/canvases/canvas.html");
-			setIntent(button_id);
+			console.log("text" + $(this).text());
+			setIntent($(this).text());
+			
+			
 		})
 	}
 });

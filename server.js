@@ -194,7 +194,7 @@ function onConnection(socket) {
 	socket.on('getCanvas',function(listOfRooms){
 		let listOfHistory = [];
 		listOfRooms.forEach(function(roomName){
-			console.log(listOfRooms);
+			//console.log(listOfRooms);
 			let index = rooms.findIndex(room => room.id === roomName);
 			rooms[index].encoding = whiteboards[index].toDataURL();
 			listOfHistory.push({
