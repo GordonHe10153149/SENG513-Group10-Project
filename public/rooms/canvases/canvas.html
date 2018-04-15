@@ -24,16 +24,22 @@
                     <button id="penBtn">Pen</button>
                     <button id="eraBtn">Eraser</button>
                 </div>
+				<div>
                 <canvas class="whiteboard" ></canvas>
+				
+				</div>
             </div>
+			
             <div class="col float-right" id="chatContainer">
                 chatbox
             </div>
         </div>
     </div>
+	<button id = 'clrBtn' type="button" class="btn btn-primary">Clear</button> 
+			<a id = 'dlBtn' type="button" class="btn btn-primary">download</a>
+
     <!-- <script src="/socket.io/socket.io.js"></script>
     <script src="/rooms/main.js"></script> -->
-	<button id = 'clrBtn' type="button" class="btn btn-primary">Clear</button> <a id = 'dlBtn' type="button" class="btn btn-primary">download</a>
 
     <script>
         joinRoom(io.intent);

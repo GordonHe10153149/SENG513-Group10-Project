@@ -96,7 +96,7 @@ debug = false;
 		context.fillStyle = "white";
 		context.fillRect(0,0,canvas.width,canvas.height);
 		$('#dlBtn').attr("href",canvas.toDataURL('image/png'));
-		$('#dlBtn').attr("download",roomName + ".png");
+		$('#dlBtn').attr("download", "download.png");
 
 		//clear the canvas
 		context.clearRect (0,0,canvas.width,canvas.height);
