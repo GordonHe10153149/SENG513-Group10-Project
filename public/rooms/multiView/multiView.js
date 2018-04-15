@@ -42,6 +42,11 @@ let scale = .5;
 			canvas.height = 480*scale;
 			div.id = "canvasContainer" + counter;
 			canvas.classList.add('whiteboard');
+			canvas.addEventListener("click",function(){
+				
+				$("#includedContent").load("/rooms/canvases/canvas.html");
+				setIntent(nameCanvasPair.name);
+			});
 			
 			
 			var roomTitle = document.createElement('h3');
