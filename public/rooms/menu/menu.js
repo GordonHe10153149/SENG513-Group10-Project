@@ -1,6 +1,28 @@
 let roomsArray;
 let rooms_count = 0;
 let canvas_room_str = "Canvas Room ";
+
+$("#view-btn").on("click",function(){
+	var listItems = $(":checkbox");
+	listItems.each(function(index){
+		if($(this).is(':checked')){
+			let name = $(this).attr('id');
+			let parsedName = name.substring(3);
+			checkedList.push(parsedName);
+			console.log(checkedList);	
+		}
+		
+	});
+	
+	$("#includedContent").load("/rooms/multiView/multiView.html");
+	
+	
+	
+	
+	
+	
+});
+
 socket.on('roomData', function(data) {
 	roomsArray = data;
 	rooms_count = roomsArray.length;
@@ -11,7 +33,7 @@ socket.on('roomData', function(data) {
 		let element_add = $('#btn-add-li');
 		let myButton = document.createElement('button');
 		rooms_count = i + 1;
-		let button_id = 'btn' + rooms_count;
+		let button_id = canvas_room_str + rooms_count;
 		let button_txt = canvas_room_str + rooms_count;
 		let button_class = '';
 		if(rooms_count%5===0){
@@ -30,12 +52,12 @@ socket.on('roomData', function(data) {
 			button_class = "\"btn btn-danger\"";
 		}
 		//console.log(button_class);
-		myButton = "<button id =" + button_id + " type=\"button\" class="+ button_class +">" + button_txt + "</button>";
+		myButton = "<input id=\"chk" + button_id+ "\" type=\"checkBox\"><button id =\"" + button_id + "\" type=\"button\" class="+ button_class +">" + button_id + "</button>";
 		element.append(myButton);
 		element.insertBefore(element_add);
 		document.getElementById(button_id).addEventListener('click', function(){
 			$("#includedContent").load("/rooms/canvases/canvas.html");
-			setIntent($('#'+button_id).text());
+			setIntent(button_id);
 		})
 	}
 });
