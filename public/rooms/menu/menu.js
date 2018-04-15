@@ -1,7 +1,7 @@
 let roomsArray;
 let rooms_count = 0;
 let canvas_room_str = "Canvas Room ";
-
+let msg;
 $("#view-btn").on("click",function(){
 	var listItems = $(":checkbox");
 	listItems.each(function(index){
@@ -69,21 +69,35 @@ socket.on('roomData', function(data) {
 });
 
 
-function previewFile() {
+$('#uploadfile').bind('change', function(e){
+    var data = e.originalEvent.target.files[0];
+    readThenSendFile(data);
+});
+
+function readThenSendFile(data){
+    //change preview to selected image
     var preview = document.querySelector('img');
     var file    = document.querySelector('input[type=file]').files[0];
     var reader  = new FileReader();
-
     reader.addEventListener("load", function () {
         preview.src = reader.result;
     }, false);
-
-    if (file) {
-        reader.readAsDataURL(file);
-        console.log(reader);
-    }
+    getBase64(file);
 }
 
+function getBase64(file) {
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        console.log(reader.result);
+        msg = reader.result;
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+
+    console.log(msg);
+}
 /*$('#btn-add').on('click', function(){
 
     let room_name = prompt("Please enter name of canvas room", "ex. The Matrix");
@@ -193,9 +207,10 @@ $('#createRoomBtn').on('click', function(){
             // Checkbox is not checked..
         }
     });
-
+	console.log("msg before sending" + msg);
 	socket.emit('makeRoom', {
 		'name': room_name,
-		'path': 'stock_apple.png'
+		'path': 'stock_apple.png',
+		'encoding': msg,
 	})
 })
