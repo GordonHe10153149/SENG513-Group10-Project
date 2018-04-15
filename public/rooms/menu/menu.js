@@ -1,6 +1,8 @@
 let roomsArray;
 let rooms_count = 0;
 let canvas_room_str = "Canvas Room ";
+
+
 socket.on('roomData', function(data) {
 	roomsArray = data;
 	//rooms_count = roomsArray.length;
@@ -56,14 +58,8 @@ socket.on('roomData', function(data) {
 	}
 	rooms_count = roomsArray.length;
 });
-//not used?
-function gotoroom(room){
-	let room_str = room;
-	$('#btn4').on('click', function(){
-		$("#includedContent").load("/rooms/canvases/canvas.html");
-		setIntent($('#btn4').text());
-	})
-}
+
+
 $('#btn-add').on('click', function(){
     let room_name = prompt("Please enter name of canvas room", "ex. The Matrix");
 	rooms_count++;//increment rooms count

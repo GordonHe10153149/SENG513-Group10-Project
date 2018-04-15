@@ -4,6 +4,7 @@ const mongo = require('mongodb').MongoClient;  // https://github.com/mongodb/nod
 
 // added in express build
 const express = require('express');
+
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
@@ -34,6 +35,8 @@ const routes = require('./routes/index');
 const users = require('./routes/users');
 
 // View engine --> handlebars : allows to dynamically change HTML
+//
+//
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({ defaultLayout: 'layout' }));
 app.set('view engine', 'handlebars');
@@ -169,8 +172,8 @@ function initializeRooms(filePath) {
 }
 
 function onConnection(socket) {
+	//io.emit('roomData', rooms);
 	io.to(socket.id).emit('roomData', rooms);
-	
     socket.on('makeRoom', function (data) {
         if (rooms.findIndex(room => room.id === data.name) === -1) {
             encodingFromFile(data.path, function (encoding) {
