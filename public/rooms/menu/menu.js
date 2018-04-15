@@ -60,7 +60,7 @@ socket.on('roomData', function(data) {
 			setIntent($(this).text());
 			
 			
-		})
+		});
 	}
 });
 //not used?
@@ -77,8 +77,7 @@ $('#btn-add').on('click', function(){
 	let element = $('<li>');
 	let element_add = $('#btn-add-li');
 	let myButton = document.createElement('button');
-	let button_id = 'btn' + rooms_count;
-	let button_txt = canvas_room_str + rooms_count;
+	let button_id = canvas_room_str + rooms_count;
 	let button_class = '';
 	if(rooms_count%5===0){
 		button_class = "\"btn btn-secondary\"";
@@ -96,13 +95,17 @@ $('#btn-add').on('click', function(){
 		button_class = "\"btn btn-danger\"";
 	}
 	//console.log(button_class);
-	myButton = "<button id =" + button_id + " type=\"button\" class="+ button_class +">" + button_txt + "</button>";
+	//console.log(button_class);
+	myButton = "<input id=\"chk" + button_id+ "\" type=\"checkBox\"><button id =\"join" + button_id + "\" type=\"button\" class="+ button_class +">" + button_id + "</button>";
 	element.append(myButton);
 	element.insertBefore(element_add);
-	document.getElementById(button_id).addEventListener('click', function(){
+	document.getElementById('join'+button_id).addEventListener('click', function(){
 		$("#includedContent").load("/rooms/canvases/canvas.html");
-		setIntent($('#'+button_id).text());
-	})
+		console.log("text" + $(this).text());
+		setIntent($(this).text());
+		
+		
+	});
 	socket.emit('makeRoom', {
 		'name': canvas_room_str + rooms_count,
 		'path': 'stock_apple.png'
